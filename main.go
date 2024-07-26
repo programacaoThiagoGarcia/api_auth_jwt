@@ -21,9 +21,15 @@ func main() {
 func setupServer() {
 	r := gin.Default()
 
-	public := r.Group("/api")
-	public.POST("/register", authentication.Register)
-	public.POST("/login", authentication.Login)
+	security := r.Group("/security")
+	security.POST("/register", authentication.Register)
+	security.POST("/login", authentication.Login)
+
+	public := r.Group("/public")
+	public.GET("", nil)
+
+	private := r.Group("/private")
+	private.GET("", nil)
 
 	PORT := os.Getenv("PORT")
 	if err := r.Run(PORT); err != nil {
